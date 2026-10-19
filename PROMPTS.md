@@ -169,3 +169,9 @@ This file contains all user prompts from the development of this project.
 80. "The backfill works decently well but it doesnt accoutn for steps done already today as it doesnt add this. can you make it so when you backfill it alsoa ccoutns for today and records them  (the pill doesnt seems to appear for today unless the app has already been opened) and then update the selected day string, steps so faron selected day and all that so this becomes the new truth ?"
 
 81. "can you tidy up the readme please"
+
+82. "Do i need to update my privacy policy for the app story for anyhtign here https://zachupstone.com/#/walkanywhere-app"
+
+83. "is ther enayhting in the app that need sto change to apss submission to the app store"
+
+84. "yes please"
