@@ -167,3 +167,5 @@ This file contains all user prompts from the development of this project.
 79. "backfill is still runnign on days before the current oen was set :( i ge tit running on 04-04 ages ago i told you sto save the current steps and date when soemthing was switched as you do contributiosn, are you doing that cuase this wil lgive you the data you need, working fromt aht backwards when you reopen the app, and you only need to commit daily contributiosn when you switch again in the future (but probs better to do when the app is opeend then you cna udpate htis value again (the switch value))"
 
 80. "The backfill works decently well but it doesnt accoutn for steps done already today as it doesnt add this. can you make it so when you backfill it alsoa ccoutns for today and records them  (the pill doesnt seems to appear for today unless the app has already been opened) and then update the selected day string, steps so faron selected day and all that so this becomes the new truth ?"
+
+81. "can you tidy up the readme please"
