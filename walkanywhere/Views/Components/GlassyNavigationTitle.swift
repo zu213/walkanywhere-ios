@@ -10,13 +10,15 @@ import SwiftUI
 struct GlassyNavigationTitle: View {
   let title: String
 
+  static let height: CGFloat = 44
+
   var body: some View {
     Text(title)
       .font(.title2)
       .fontWeight(.bold)
       .foregroundStyle(.primary)
       .padding(.horizontal, 20)
-      .padding(.vertical, 12)
+      .frame(minHeight: Self.height)
       .background(
         ZStack {
           // Glassmorphism background

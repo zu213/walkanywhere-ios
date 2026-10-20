@@ -11,13 +11,14 @@ struct GlassyButton: View {
   let systemImage: String
   let action: () -> Void
   var tintColor: Color = .primary
+  var size: CGFloat = 44
 
   var body: some View {
     Button(action: action) {
       Image(systemName: systemImage)
         .font(.title3)
         .foregroundStyle(tintColor)
-        .frame(width: 44, height: 44)
+        .frame(width: size, height: size)
         .background(
           ZStack {
             // Glassmorphism background

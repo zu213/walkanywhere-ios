@@ -51,6 +51,7 @@ struct MainRouteView: View {
                 .stroke(.blue, lineWidth: 4)
             }
             .mapStyle(.standard)
+            .ignoresSafeArea()
             .onAppear {
               setupMapPosition(for: mainRoute, screenHeight: geometry.size.height)
             }
@@ -62,8 +63,10 @@ struct MainRouteView: View {
                 withAnimation {
                   setupMapPosition(for: mainRoute, screenHeight: geometry.size.height)
                 }
-              }
+              },
+              bottomPadding: 0
             )
+            
           }
         }
       } else {
@@ -77,7 +80,7 @@ struct MainRouteView: View {
       // Glassy navigation title at the top
       HStack {
         GlassyNavigationTitle(title: "Current Journey")
-          .padding(.top, 60)
+          .padding(.top, 28)
           .padding(.leading, 20)
 
         Spacer()
@@ -89,7 +92,7 @@ struct MainRouteView: View {
           Image(systemName: "hammer.fill")
             .font(.system(size: 16))
             .foregroundStyle(.white)
-            .frame(width: 40, height: 40)
+            .frame(width: GlassyNavigationTitle.height, height: GlassyNavigationTitle.height)
             .background(.ultraThinMaterial)
             .background(
               LinearGradient(
@@ -112,7 +115,7 @@ struct MainRouteView: View {
             )
             .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
         }
-        .padding(.top, 60)
+        .padding(.top, 28)
         .padding(.trailing, 20)
         .sheet(isPresented: $showDebugSheet) {
           DebugTestView(
@@ -124,7 +127,6 @@ struct MainRouteView: View {
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     }
-    .ignoresSafeArea()
   }
 
   private func setupMapPosition(for route: SavedRoute, screenHeight: CGFloat? = nil) {

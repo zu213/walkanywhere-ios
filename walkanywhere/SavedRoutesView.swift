@@ -145,13 +145,12 @@ struct SavedRoutesView: View {
         Spacer()
         GlassyButton(systemImage: "plus", action: {
           showingMapSheet = true
-        })
-        .padding(.trailing, 20)
+        }, size: GlassyNavigationTitle.height)
       }
-      .padding(.top, 60)
+      .padding(.top, 28)
+      .padding(.trailing, 20)
       .padding(.leading, 20)
     }
-    .ignoresSafeArea(edges: .top)
   }
 
   private func deleteRoutes(at offsets: IndexSet) {
@@ -199,6 +198,7 @@ struct RouteViewSheet: View {
             .stroke(.blue, lineWidth: 4)
         }
         .mapStyle(.standard)
+        .ignoresSafeArea()
         .onAppear {
           setupMapPosition()
         }
@@ -213,7 +213,7 @@ struct RouteViewSheet: View {
             }
           },
           initiallyMinimized: false,
-          bottomPadding: 20
+          bottomPadding: 0
         )
       }
 
@@ -232,7 +232,6 @@ struct RouteViewSheet: View {
         Spacer()
       }
     }
-    .ignoresSafeArea()
   }
 
   private func setupMapPosition() {

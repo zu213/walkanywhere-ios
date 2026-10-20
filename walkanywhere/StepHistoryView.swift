@@ -108,13 +108,15 @@ struct StepHistoryView: View {
         await healthKitManager.fetchStepHistory(days: 30)
       }
 
-      // Glassy navigation title at the top
-      GlassyNavigationTitle(title: "Step History")
-        .padding(.top, 60)
-        .padding(.leading, 20)
-        .frame(maxWidth: .infinity, alignment: .leading)
+      
+      HStack {
+        // Glassy navigation title at the top
+        GlassyNavigationTitle(title: "Step History")
+          .padding(.top, 28)
+          .padding(.leading, 20)
+          .frame(maxWidth: .infinity, alignment: .leading)
+      }
     }
-    .ignoresSafeArea(edges: .top)
   }
 
   private func colorForRoute(index: Int) -> Color {
