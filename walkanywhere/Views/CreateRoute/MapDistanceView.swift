@@ -179,7 +179,7 @@ struct MapDistanceView: View {
                       Text(item.name ?? "Unknown")
                         .font(.body)
                         .foregroundStyle(.primary)
-                      if let address = item.placemark.title {
+                      if let address = item.address?.description {
                         Text(address)
                           .font(.caption)
                           .foregroundStyle(.secondary)
@@ -225,11 +225,14 @@ struct MapDistanceView: View {
   private func calculateWalkingRoute() async {
     guard let start = startLocation, let end = endLocation else { return }
 
+    let startModern = CLLocation(latitude: start.latitude, longitude: start.longitude)
+    let endModern = CLLocation(latitude: end.latitude, longitude: end.longitude)
+    
     isCalculatingRoute = true
 
     let request = MKDirections.Request()
-    request.source = MKMapItem(placemark: MKPlacemark(coordinate: start))
-    request.destination = MKMapItem(placemark: MKPlacemark(coordinate: end))
+    request.source = MKMapItem(location: startModern, address: nil)
+    request.destination = MKMapItem(location: endModern, address: nil)
     request.transportType = .walking
 
     let directions = MKDirections(request: request)
@@ -292,18 +295,20 @@ struct MapDistanceView: View {
     // Calculate midpoint
     let midLat = (start.latitude + end.latitude) / 2
     let midLon = (start.longitude + end.longitude) / 2
-    let midpoint = CLLocationCoordinate2D(latitude: midLat, longitude: midLon)
+    let midpoint = CLLocation(latitude: midLat, longitude: midLon)
+    let startLocation = CLLocation(latitude: start.latitude, longitude: start.longitude)
+    let endLocation = CLLocation(latitude: end.latitude, longitude: end.longitude)
 
     // Try to get walking route from start to midpoint
     let startToMidRequest = MKDirections.Request()
-    startToMidRequest.source = MKMapItem(placemark: MKPlacemark(coordinate: start))
-    startToMidRequest.destination = MKMapItem(placemark: MKPlacemark(coordinate: midpoint))
+    startToMidRequest.source = MKMapItem(location: startLocation, address: nil)
+    startToMidRequest.destination = MKMapItem(location: midpoint, address: nil)
     startToMidRequest.transportType = .walking
 
     // Try to get walking route from midpoint to end
     let midToEndRequest = MKDirections.Request()
-    midToEndRequest.source = MKMapItem(placemark: MKPlacemark(coordinate: midpoint))
-    midToEndRequest.destination = MKMapItem(placemark: MKPlacemark(coordinate: end))
+    midToEndRequest.source = MKMapItem(location: midpoint, address: nil)
+    midToEndRequest.destination = MKMapItem(location: endLocation, address: nil)
     midToEndRequest.transportType = .walking
 
     var startPolyline: MKPolyline?
@@ -504,19 +509,19 @@ struct MapDistanceView: View {
     // Otherwise use the coordinate with a default zoom
     let region: MKCoordinateRegion
 
-    if let boundingRegion = mapItem.placemark.region as? CLCircularRegion {
+    if let boundingRegion = mapItem.addressRepresentations?.region as? CLCircularRegion {
       // If we have a circular region, use its radius to determine zoom
       let radius = boundingRegion.radius
       // Convert radius to coordinate span (approximate)
       let span = radius / 111000.0 // 111km per degree approximately
       region = MKCoordinateRegion(
-        center: mapItem.placemark.coordinate,
+        center: mapItem.location.coordinate,
         span: MKCoordinateSpan(latitudeDelta: span * 2.5, longitudeDelta: span * 2.5)
       )
     } else {
       // For specific addresses or points without region info, use a closer zoom
       region = MKCoordinateRegion(
-        center: mapItem.placemark.coordinate,
+        center: mapItem.location.coordinate,
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
       )
     }

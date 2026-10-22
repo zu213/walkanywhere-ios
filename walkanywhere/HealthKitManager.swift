@@ -116,9 +116,12 @@ class HealthKitManager {
         let stepData = StepData(date: statistics.startDate, stepCount: Int(steps))
         history.append(stepData)
       }
+      
+      // Freeze the history
+      let finalHistory = Array(history.reversed())
 
       Task { @MainActor in
-        self.stepHistory = history.reversed()
+        self.stepHistory = finalHistory
       }
     }
 
